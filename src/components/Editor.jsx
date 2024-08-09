@@ -17,6 +17,9 @@ function Editor({
         value={value}
         onChange={(value) => handleEditorChange(value)}
         className='rounded-lg shadow-md'
+        options={{
+        fontSize: 18,
+      }}
       /> 
     </div>
 

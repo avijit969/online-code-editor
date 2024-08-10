@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 function SignUp() {
     const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const navigate = useNavigate()
@@ -13,11 +14,15 @@ function SignUp() {
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
+            options:{
+                username:username
+            }
         })
 
         if (error) {
             setError(error.message)
             toast.error(error.message)
+            console.log(error)
         } else {
             console.log('User registered:', data.user)
             toast.success('User registration successfully ')
@@ -44,6 +49,17 @@ function SignUp() {
             <div className="flex justify-center my-2 mx-4 md:mx-0">
                 <form className="w-full max-w-xl bg-white rounded-lg shadow-md p-6" onSubmit={handleSignUp}>
                     <div className="flex flex-wrap -mx-3 mb-6">
+                        <div className="w-full md:w-full px-3 mb-6">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor='email'>Username</label>
+                            <input
+                                className="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                                type='text'
+                                id='text'
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
                         <div className="w-full md:w-full px-3 mb-6">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor='email'>Email address</label>
                             <input
